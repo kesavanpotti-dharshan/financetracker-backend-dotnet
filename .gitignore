@@ -1,0 +1,23 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# EF Core / secrets — user-secrets live outside the repo (~/.microsoft/usersecrets) so this is just a safety net
+appsettings.Development.json
+appsettings.*.local.json
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# frontend (if it ever lives in this repo)
+node_modules/
+dist/
+
+cookies.txt
