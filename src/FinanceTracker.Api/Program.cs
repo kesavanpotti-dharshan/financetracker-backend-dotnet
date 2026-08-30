@@ -1,8 +1,14 @@
 using System.Text;
+using FinanceTracker.Application.Accounts;
 using FinanceTracker.Application.Auth;
+using FinanceTracker.Application.Institutions;
 using FinanceTracker.Application.Interfaces;
+using FinanceTracker.Application.Statements;
+using FinanceTracker.Application.Transactions;
+using FinanceTracker.Infrastructure.Ai;
 using FinanceTracker.Infrastructure.Auth;
 using FinanceTracker.Infrastructure.Persistence;
+using FinanceTracker.Infrastructure.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +26,19 @@ builder.Services.AddScoped<RegisterHandler>();
 builder.Services.AddScoped<LoginHandler>();
 builder.Services.AddScoped<RefreshHandler>();
 builder.Services.AddScoped<LogoutHandler>();
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<AccountHandlers>();
+
+builder.Services.AddHttpClient<IStatementParser, GeminiStatementParser>();
+builder.Services.AddScoped<IFileStorage, AzureBlobStorage>();
+builder.Services.AddScoped<IStatementRepository, StatementRepository>();
+builder.Services.AddScoped<StatementHandlers>();
+
+builder.Services.AddScoped<IInstitutionRepository, InstitutionRepository>();
+builder.Services.AddScoped<InstitutionHandlers>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<TransactionHandlers>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
