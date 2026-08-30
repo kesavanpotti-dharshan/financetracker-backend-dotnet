@@ -1,23 +1,42 @@
-# .NET
+# Build results
 bin/
 obj/
+out/
+
+# User-specific files
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
 
-# EF Core / secrets — user-secrets live outside the repo (~/.microsoft/usersecrets) so this is just a safety net
+# Rider / VS / VSCode
+.vs/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# EF Core
+*.dbmdl
+
+# Secrets — real values live in dotnet user-secrets or environment variables, never in git
 appsettings.Development.json
 appsettings.*.local.json
+*.pfx
 
-# IDE
-.vs/
-.vscode/
-.idea/
+# Logs
+*.log
 
 # OS
 .DS_Store
+Thumbs.db
 
-# frontend (if it ever lives in this repo)
-node_modules/
-dist/
+# NuGet
+*.nupkg
+**/packages/*
+!**/packages/build/
+
+# Test results
+[Tt]est[Rr]esult*/
+coverage/
 
 cookies.txt
