@@ -61,7 +61,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
-        policy.WithOrigins("http://localhost:5173", "https://<your-vercel-domain>.vercel.app")
+        policy.WithOrigins("http://localhost:5173", "https://myfinancetracker-app.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials()); // required for cookies to be sent cross-origin
