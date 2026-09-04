@@ -5,8 +5,10 @@ using FinanceTracker.Application.Institutions;
 using FinanceTracker.Application.Interfaces;
 using FinanceTracker.Application.Statements;
 using FinanceTracker.Application.Transactions;
+using FinanceTracker.Application.Users;
 using FinanceTracker.Infrastructure.Ai;
 using FinanceTracker.Infrastructure.Auth;
+using FinanceTracker.Infrastructure.Fx;
 using FinanceTracker.Infrastructure.Persistence;
 using FinanceTracker.Infrastructure.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -39,6 +41,9 @@ builder.Services.AddScoped<IInstitutionRepository, InstitutionRepository>();
 builder.Services.AddScoped<InstitutionHandlers>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<TransactionHandlers>();
+
+builder.Services.AddHttpClient<IExchangeRateService, FrankfurterExchangeRateService>();
+builder.Services.AddScoped<UserSettingsHandlers>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
