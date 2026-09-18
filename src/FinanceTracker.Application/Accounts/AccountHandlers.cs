@@ -36,6 +36,7 @@ public class AccountHandlers(IAccountRepository repo)
         return ToDto(created!);
     }
 
+    // AccountHandlers.cs — update UpdateAsync
     public async Task<AccountDto?> UpdateAsync(UpdateAccountCommand cmd, Guid userId)
     {
         var account = await repo.GetByIdAsync(cmd.Id, userId);
@@ -43,8 +44,11 @@ public class AccountHandlers(IAccountRepository repo)
 
         account.Name = cmd.Name;
         account.Currency = cmd.Currency;
+        account.InstitutionId = cmd.InstitutionId;
         await repo.SaveChangesAsync();
-        return ToDto(account);
+
+        var updated = await repo.GetByIdAsync(cmd.Id, userId); // reload so Institution nav prop reflects the change
+        return ToDto(updated!);
     }
 
     public async Task<bool> ArchiveAsync(Guid id, Guid userId)
@@ -80,7 +84,7 @@ public class AccountHandlers(IAccountRepository repo)
     {
         var latest = a.Balances.OrderByDescending(b => b.AsOfDate).FirstOrDefault();
         return new AccountDto(
-            a.Id, a.Name, a.AccountType.ToString(), a.Institution?.Name,
+            a.Id, a.Name, a.AccountType.ToString(), a.InstitutionId, a.Institution?.Name,
             a.Currency, latest?.Balance ?? 0m, latest?.AsOfDate, a.IsActive);
     }
     public async Task<CreditCardDetailsDto?> GetCreditCardDetailsAsync(Guid accountId, Guid userId)
