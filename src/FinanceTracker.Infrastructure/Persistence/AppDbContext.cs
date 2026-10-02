@@ -13,6 +13,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Statement> Statements => Set<Statement>();
     public DbSet<Transaction> Transactions => Set<Transaction>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<Subscription> Subscriptions => Set<Subscription>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -43,6 +44,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .Property(s => s.Status)
             .HasConversion<string>();
 
+        modelBuilder.Entity<Subscription>()
+            .Property(s => s.BillingCycle)
+            .HasConversion<string>();
+
         // Indexes for the queries that run constantly
         modelBuilder.Entity<Account>()
             .HasIndex(a => a.UserId);
@@ -52,6 +57,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<RefreshToken>()
             .HasIndex(r => r.UserId);
+
+        modelBuilder.Entity<Subscription>()
+            .HasIndex(s => s.UserId);
 
         modelBuilder.Entity<RefreshToken>()
             .HasIndex(r => r.TokenHash)

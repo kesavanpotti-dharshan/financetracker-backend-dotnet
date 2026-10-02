@@ -9,4 +9,5 @@ public class User
     public string? PreferredSecondaryCurrency { get; set; }
 
     public ICollection<Account> Accounts { get; set; } = [];
+    public ICollection<Subscription> Subscriptions { get; set; } = [];
 }

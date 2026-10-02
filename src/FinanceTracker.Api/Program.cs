@@ -4,6 +4,7 @@ using FinanceTracker.Application.Auth;
 using FinanceTracker.Application.Institutions;
 using FinanceTracker.Application.Interfaces;
 using FinanceTracker.Application.Statements;
+using FinanceTracker.Application.Subscriptions;
 using FinanceTracker.Application.Transactions;
 using FinanceTracker.Application.Users;
 using FinanceTracker.Infrastructure.Ai;
@@ -44,6 +45,9 @@ builder.Services.AddScoped<TransactionHandlers>();
 
 builder.Services.AddHttpClient<IExchangeRateService, FrankfurterExchangeRateService>();
 builder.Services.AddScoped<UserSettingsHandlers>();
+
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+builder.Services.AddScoped<SubscriptionHandlers>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
